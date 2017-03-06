@@ -114,7 +114,7 @@ class APIConsumer
         results = JSON.parse(response.body)
         accept_codes = [200, 201, 202]
         accept_codes += settings[:accept_codes].map(&:to_i) if settings[:accept_codes]
-        if ![200, 201].include?(response.code.to_i)
+        if !accept_codes.include?(response.code.to_i)
           results = error_code(response.code, opts[:errors], results)
         end
         results = blk.call(results) if blk

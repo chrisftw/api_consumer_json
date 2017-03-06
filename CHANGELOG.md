@@ -1,3 +1,9 @@
+## 0.0.8
+
+Bugfixes:
+
+  - use the accept_codes from 0.0.7 (@chrisftw)
+
 ## 0.0.7
 
 Features:

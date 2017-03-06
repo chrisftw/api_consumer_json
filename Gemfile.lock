@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    api_consumer_json (0.0.7)
+    api_consumer_json (0.0.8)
       uber_cache (~> 0.0)
 
 GEM

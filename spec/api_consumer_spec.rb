@@ -100,7 +100,8 @@ describe APIConsumer do
       )
       FakeWeb.register_uri(
         :get, "http://www.kuakes.com/json/",
-        :body => File.read("spec/mock/api_responses/kuakes.json")
+        :body => File.read("spec/mock/api_responses/kuakes.json"),
+        :status => [202, "Accept"] # normally not a 202 response, but needed a test.
       )
     end
     
