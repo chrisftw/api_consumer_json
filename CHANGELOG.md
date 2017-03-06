@@ -1,3 +1,10 @@
+## 0.0.7
+
+Features:
+
+  - Added 202 to default accept codes (@chrisftw)
+  - Added setting accept_codes to add more accept codes (@chrisftw)
+  - decorate_path helper method to overwrite at will (@chrisftw)
 
 ## 0.0.5
 

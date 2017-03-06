@@ -9,10 +9,14 @@ class APIConsumer
   class << self
     @settings = {}
     def inherited(subclass)
-      configs = YAML.load_file("config/#{snake_case(subclass)}.yml")
-      configs[snake_case(subclass)].each{ |k,v| subclass.set(k.to_sym, v) }
-      subclass.set_logger(Logger.new(subclass.settings[:log_file] || "./log/#{snake_case(subclass)}_api.log"), subclass.settings[:log_level])
-      super
+      if File.exist?("config/#{snake_case(subclass)}.yml")
+        configs = YAML.load_file("config/#{snake_case(subclass)}.yml")
+        configs[snake_case(subclass)].each{ |k,v| subclass.set(k.to_sym, v) }
+        subclass.set_logger(Logger.new(subclass.settings[:log_file] || "./log/#{snake_case(subclass)}_api.log"), subclass.settings[:log_level])
+        super
+      else
+        raise RuntimeError, "Please create config file: 'config/#{snake_case(subclass)}.yml'"
+      end
     end
     
     def set_logger(logger, level=nil)
@@ -83,6 +87,7 @@ class APIConsumer
       opts[:headers] = DEFAULT_REQUEST_OPTS[:headers].merge(opts[:headers] || {})
       opts[:method] = opts[:method] || DEFAULT_REQUEST_OPTS[:method]
 
+      path = decorate_path( path )
       req = if( opts[:method] == :get)
         Net::HTTP::Get.new(path)
       elsif( opts[:method] == :post)
@@ -97,7 +102,7 @@ class APIConsumer
       opts[:headers].each { |k,v| req[k] = v }
       settings[:headers].each { |k,v| req[k] = v } if settings[:headers]
       req.basic_auth settings[:api_user], settings[:api_password] if settings[:api_user] && settings[:api_password]
-      req["connection"] = 'keep-alive'
+      #req["connection"] = 'keep-alive'
       req.body = opts[:body] if opts[:body]
 
       response = nil
@@ -107,6 +112,8 @@ class APIConsumer
         response = conn.request(req)
         
         results = JSON.parse(response.body)
+        accept_codes = [200, 201, 202]
+        accept_codes += settings[:accept_codes].map(&:to_i) if settings[:accept_codes]
         if ![200, 201].include?(response.code.to_i)
           results = error_code(response.code, opts[:errors], results)
         end
@@ -163,6 +170,10 @@ class APIConsumer
       ret_val = {:error => true, :message => (errors && errors[code.to_s] ? errors[code.to_s] : "API error: #{code}" )}
       ret_val[:response] = response if response
       return ret_val
+    end
+
+    def decorate_path(p)
+      p
     end
   end
 end
