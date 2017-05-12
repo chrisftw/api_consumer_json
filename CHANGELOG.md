@@ -1,3 +1,9 @@
+## 0.1.0
+
+Bugfixes:
+
+  - Allow options for memcache(updating uber_cache to 0.0.2) (@chrisftw)
+
 ## 0.0.8
 
 Bugfixes:

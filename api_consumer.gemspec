@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'api_consumer_json'
-  s.version     = '0.0.8'
-  s.date        = '2017-03-06'
+  s.version     = '0.1.0'
+  s.date        = '2017-05-12'
   s.summary     = "Consume all the APIs"
   s.description = "Easy to use API consumer - Setup your API connection in a yaml file, and use the helper methods to make easy access APIs calls"
   s.authors     = ["Chris Reister"]
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/chrisftw/api_consumer_json'
   s.license     = 'MIT'
   
-  s.add_runtime_dependency 'uber_cache', '~> 0.0'
+  s.add_runtime_dependency 'uber_cache', '~> 0.0.2'
 
   # might work with older development_dependencies.
   s.add_development_dependency 'rspec', '~> 3.0'

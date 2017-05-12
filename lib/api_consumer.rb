@@ -58,6 +58,14 @@ class APIConsumer
       settings[:memcache_hosts]
     end
 
+    def memcache_settings
+      mem_settings = (settings[:memcache_settings] || {})
+      mem_settings.keys.each do |key|
+        mem_settings[(key.to_sym rescue key) || key] = mem_settings.delete(key)
+      end
+      mem_settings
+    end
+
     def set(key, val)
       settings[key] = val
     end
@@ -154,7 +162,7 @@ class APIConsumer
     end
 
     def cache
-      @cache ||= UberCache.new(settings[:cache_prefix], settings[:memcache_hosts])
+      @cache ||= UberCache.new(settings[:cache_prefix], settings[:memcache_hosts], memcache_settings)
     end
 
     private

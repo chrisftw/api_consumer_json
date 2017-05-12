@@ -131,4 +131,14 @@ describe APIConsumer do
       Kuakes.log.error("sample error")
     end
   end
+
+  describe "memcache_settings" do
+    it "should have be a hash with 2 values" do
+      expect(Kuakes.memcache_settings).not_to eq(nil)
+      expect(Kuakes.memcache_settings["username"]).to eq(nil)
+      expect(Kuakes.memcache_settings[:username]).to eq("USERNAME")
+      expect(Kuakes.memcache_settings["password"]).to eq(nil)
+      expect(Kuakes.memcache_settings[:password]).to eq("PA$$WORD")
+    end
+  end
 end
