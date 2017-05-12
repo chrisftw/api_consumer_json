@@ -5,12 +5,14 @@ class APIConsumer
   require 'json'
   require 'uber_cache'
   require 'logger'
+  require 'erb'
 
   class << self
     @settings = {}
     def inherited(subclass)
       if File.exist?("config/#{snake_case(subclass)}.yml")
-        configs = YAML.load_file("config/#{snake_case(subclass)}.yml")
+        yml_template = ERB.new File.new("config/#{snake_case(subclass)}.yml").read
+        configs = YAML.load yml_template.result(binding)
         configs[snake_case(subclass)].each{ |k,v| subclass.set(k.to_sym, v) }
         subclass.set_logger(Logger.new(subclass.settings[:log_file] || "./log/#{snake_case(subclass)}_api.log"), subclass.settings[:log_level])
         super
