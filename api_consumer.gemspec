@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'api_consumer_json'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.date        = '2017-05-12'
   s.summary     = "Consume all the APIs"
   s.description = "Easy to use API consumer - Setup your API connection in a yaml file, and use the helper methods to make easy access APIs calls"

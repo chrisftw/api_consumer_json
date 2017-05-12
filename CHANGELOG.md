@@ -1,3 +1,10 @@
+## 0.1.1
+
+Bugfixes:
+
+  - Allow ERB in the settings (@chrisftw)
+
+
 ## 0.1.0
 
 Bugfixes:
